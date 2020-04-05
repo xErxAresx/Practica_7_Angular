@@ -1,0 +1,34 @@
+<form>
+    <div class="introduirNom">
+
+        <label>El nom de la recepta: </label>
+        <select class="form-control" id="name" name="nom_recepta" [(ngModel)]="form_coment.nom_recepta" placeholder="Nom">
+            <option *ngFor="let recepta of recep" value="{{recepta.name}}">{{recepta.name}}</option>
+        </select>
+
+    </div>
+
+    <div class="introduirStarts" style="margin-top: 10px;">
+
+        <label>Valoració en estrelles:</label>
+        <select class="form-control" id="form-control" id="starts" name="starts" [(ngModel)]="form_coment.starts">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+
+
+    </div>
+
+    <div class="introduirDes">
+
+        <textarea style="margin-top: 10px;" class="form-control" id="description" name="description_coment" [(ngModel)]="form_coment.description" placeholder="Comentari" rows="2"></textarea>
+
+    </div>
+
+    <div class="buttSend">
+        <button type="button" class="btn btn-success" style="margin-top:10px" (click)="crearComentari()">Afegir Comentari</button>
+    </div>
+</form>

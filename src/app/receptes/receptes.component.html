@@ -1,0 +1,109 @@
+<div class="form-group" style="margin-top: 20px;">
+    <input type="text" class="form-control mr-sm-2" placeholder="Busca aqui la recepta" name="searchbar" [(ngModel)]='searchbar'>
+</div>
+<div>
+    <select class="form-control" (change)="onChange($event.target.value)" [(ngModel)]='selector' name="selector">
+      <option>Tria una de les opcions</option>
+      <option>Nom ASC</option>
+      <option>Nom DSC</option>
+      <option>Ingredients ASC</option>
+      <option>Ingredients DSC</option>
+    </select>
+    <br>
+</div>
+
+<div class="recepta" *ngFor="let recepta of recep | select:selec | search:searchbar">
+    <h3> {{recepta.name}} </h3>
+
+    <div class="descripcio">
+
+        <p>{{recepta.description}}</p>
+
+    </div>
+
+    <ul class="nav nav-tabs mt-3" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#ing{{recepta.name.split(' ').join('')}}" role="tab">Ingredients</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#val{{recepta.name.split(' ').join('')}}" role="tab">Valoracions</a>
+        </li>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane active" id="ing{{recepta.name.split(' ').join('')}}" role="tabpanel">
+            <p>{{recepta.ingredients}}</p>
+        </div>
+        <div class="tab-pane" id="val{{recepta.name.split(' ').join('')}}" role="tabpanel">
+            <div class="comentari " *ngFor="let comentarii of comentari ">
+                <div *ngIf="recepta.name==comentarii.nom_recepta ">
+                    <p class="estrelles ">{{comentarii.starts}} Estrelles</p>
+                    <p class="valoracio "> - {{comentarii.description}}</p>
+                    <p class="data ">{{comentarii.date}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal">Editar</button>
+    <button type="button" class="btn btn-danger" (click)="eliminarRecepta(recepta.id)">Eliminar</button>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Editar recepta</h5>
+                </div>
+                <div class="modal-body">
+
+                    <div class="introduirNom form-group">
+                        <input type="text" class="form-control" id="name" name="name" #name="ngModel" [(ngModel)]="recepta_edit.name" placeholder="Nom" required minlength="3">
+                        <div style="margin-top: 5px;" *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
+
+                            <div *ngIf="name.errors.required">
+                                Has de posar alguna cosa.
+                            </div>
+                            <div *ngIf="name.errors.minlength">
+                                Ha de tenir 3 caracters co a minim.
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="introduirDes form-group">
+                        <textarea class="form-control" id="recepta" #description_recepta="ngModel" name="description_recepta" [(ngModel)]="recepta_edit.description" placeholder="Recepta" rows="3" required minlength="3"></textarea>
+
+                        <div style="margin-top: 5px;" *ngIf="description_recepta.invalid && (description_recepta.dirty || description_recepta.touched)" class="alert alert-danger">
+
+                            <div *ngIf="description_recepta.errors.required">
+                                Has de posar alguna cosa.
+                            </div>
+                            <div *ngIf="description_recepta.errors.minlength">
+                                Ha de tenir 3 caracters co a minim.
+                            </div>
+                        </div>
+
+
+                        <textarea class="form-control" id="ingredients" name="ingredients_recepta" #ingredients="ngModel" [(ngModel)]="recepta_edit.ingredients" placeholder="Ingredients" rows="2" required minlength="3"></textarea>
+
+                        <div style="margin-top: 5px;" *ngIf="ingredients.invalid && (ingredients.dirty || ingredients.touched)" class="alert alert-danger">
+
+                            <div *ngIf="ingredients.errors.required">
+                                Has de posar alguna cosa.
+                            </div>
+                            <div *ngIf="ingredients.errors.minlength">
+                                Ha de tenir 3 caracters co a minim.
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-success" (click)="editarRecepta(recepta.name)">Editar</button>
+                    <button type="button" class="btn btn-outline-danger" (click)="eliminarRecepta(recepta.name)" data-dismiss="modal">Cancel·lar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+</div>

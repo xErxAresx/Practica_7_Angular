@@ -1,0 +1,50 @@
+<form>
+
+
+    <div class="introduirNom form-group">
+        <input type="text" class="form-control" id="name" name="name" #name="ngModel" [(ngModel)]="form_recep.name" placeholder="Introdueix el nom" required minlength="3">
+
+
+        <div style="margin-top: 5px;" *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
+
+            <div *ngIf="name.errors.required">
+                Has d'afegir alguna cosa.
+            </div>
+            <div *ngIf="name.errors.minlength">
+                Ha de tenir minim 3 caracters.
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="introduirDes form-group">
+        <textarea class="form-control" id="recepta" #description_recepta="ngModel" name="description_recepta" [(ngModel)]="form_recep.description" placeholder="Recepta" rows="3" required minlength="3"></textarea>
+
+        <div style="margin-top: 5px;" *ngIf="description_recepta.invalid && (description_recepta.dirty || description_recepta.touched)" class="alert alert-danger">
+
+            <div *ngIf="description_recepta.errors.required">
+                Has d'afegir alguna cosa.
+            </div>
+            <div *ngIf="description_recepta.errors.minlength">
+                Ha de tenir més de 3 caracters.
+            </div>
+        </div>
+
+        <textarea class="form-control" id="ingredients" name="ingredients_recepta" #ingredients="ngModel" [(ngModel)]="form_recep.ingredients" placeholder="Ingredients" rows="2" required minlength="3"></textarea>
+
+        <div style="margin-top: 5px;" *ngIf="ingredients.invalid && (ingredients.dirty || ingredients.touched)" class="alert alert-danger">
+
+            <div *ngIf="ingredients.errors.required">
+                Has d'afegir alguna cosa.
+            </div>
+            <div *ngIf="ingredients.errors.minlength">
+                Ha de tenir més de 3 caracters.
+            </div>
+        </div>
+    </div>
+
+    <div class="buttSend">
+        <button type="button" class="btn btn-success" (click)="crearRecepta()">Afegir Recepta</button>
+    </div>
+</form>
